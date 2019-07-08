@@ -1,7 +1,6 @@
 import requests
 import datetime
 from lxml import html
-from emailer import send_debug_email
 
 class FlightTracker:
     def __init__(self, flight_number: str):
@@ -63,23 +62,9 @@ class FlightTracker:
 
     def is_delayed_today(self) -> bool:
         d = datetime.datetime.today()
-        data = ft.get_data_list(d)
-        text_times = ft.get_text_times(data)
-        times = ft.text_times_to_24_datetimes(text_times)
+        data = self.get_data_list(d)
+        text_times = self.get_text_times(data)
+        times = self.text_times_to_24_datetimes(text_times)
         scheduled_time = times[0]
         estimated_time = times[1]
         return scheduled_time.time() < estimated_time.time()
-
-flight = "DL-183"
-ft = FlightTracker(flight)
-
-sender_email = "me@gmail.com"
-receiver_email = "you@gmail.com"
-message = """\
-    Subject: Hi
-    There is a delay in your flight.
-    """
-isDelayed = ft.is_delayed_today()
-print(isDelayed)
-if (isDelayed == True):
-    send_debug_email(sender_email, receiver_email, message)
