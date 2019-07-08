@@ -1,25 +1,37 @@
-import datetime
-#from requests_html import HTMLSession
 import requests
+import datetime
 from lxml import html
-'''
-url = "https://flightaware.com/live/flight/"
-flight = "SWA203"
-'''
-url = "https://www.kayak.com/tracker/"
+
+class FlightTracker:
+    def __init__(self, flight_number: str):
+        self.flight = flight_number
+
+    # Uses the flight number and date to form the flight url on kayak
+    def generate_URL(self, date: datetime.datetime) -> str:
+        url = "https://www.kayak.com/tracker/"
+        date = str(d.year) + "-" + str(d.strftime('%m')) + "-" + str(d.strftime('%d'))
+        url = url + self.flight + '/' + date
+        return url
+
+    # Uses the requests API to get the flight webpage as text
+    def get_response(self, date: datetime.datetime) -> requests.Response:
+        url = self.generate_URL(date)
+        r = requests.get(url)
+        return r
+    
+    # Parses the HTML text to find the tags with the relevant data
+    def get_data_list(self, date: datetime.datetime) -> list:
+        r = self.get_response(date)
+        #turn the HTML response to bytes and then to a tree
+        tree = html.fromstring(r.content) 
+        # parse the tree using the hardcoded xpath expression
+        data = tree.xpath('//div[@class="col-6-12"]/text()')
+        return data
+
 flight = "WN-203"
+ft = FlightTracker(flight)
 d = datetime.datetime.today()
-date = str(d.year) + "-" + str(d.strftime('%m')) + "-" + str(d.strftime('%d'))
-url = url + flight + '/' + date
-'''
-session = HTMLSession()
-r = session.get(url)
-'''
-r = requests.get(url)
-text = r.text
-tree = html.fromstring(r.content)
-col = tree.xpath('//div[@class="col-6-12"]/text()')
-print(col)
+col = ft.get_data_list(d)
 
 scheduled_time = ""
 estimated_time = ""
