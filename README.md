@@ -21,9 +21,9 @@ Robust functionality:
  - if a flight is not found, should check other dates and notify user
 
 Extra functionality:
- - 
+ - undecided
 
-At this time, I am trying to get basic functionality working.
+Still working on robust functionality
 
 Citations:
 https://2.python-requests.org/en/master/user/quickstart/
