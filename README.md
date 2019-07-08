@@ -1,6 +1,10 @@
 # FlightTracker
 The goal of this program is to send automatic emails when it detects a flight is delayed.
 
+Written in python3.
+
+Solves the problem of having to give your email to a company to get alerts. 
+
 Flight data is taken from https://www.kayak.com/tracker/ since the website provides data in the HTML returned after a request instead of in a variable which at this point I'm unsure how to access the value of. I am using the Requests API with python to send HTTP requests to the flight tracker website and then looking through the text returned to find the estimated arrival time and the scheduled arrival time.
 
 Basic functionality:
