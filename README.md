@@ -32,3 +32,5 @@ https://www.kayak.com/tracker/WN-203/2019-07-07
 view-source:https://www.kayak.com/tracker/WN-203/2019-07-07
 https://docs.python-guide.org/scenarios/scrape/
 https://stackoverflow.com/questions/1831410/python-time-comparison
+
+https://realpython.com/python-send-email/#option-2-setting-up-a-local-smtp-server
