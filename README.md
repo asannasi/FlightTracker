@@ -16,21 +16,16 @@ Basic functionality:
 Robust functionality:
  - Make sure the times can be compared with AM and PM
  - Only one email should be sent for some delay threshold
+ - raise error if flight not found
+
+Extra functionality (not implemented):
  - If the program starts before midnight and ends after midnight, it should still work
- - Putting an invalid date outside kayak's thresholds should result in an error
- - if a flight is not found, should check other dates and notify user
-
-Extra functionality:
- - undecided
-
-Still working on robust functionality
+ - Handle the case of arrival times spaced out before midnight and after midnight (I'm not sure how the kayak website handles this and there is no easy way to find a test case)
 
 Citations:
 https://2.python-requests.org/en/master/user/quickstart/
 https://www.w3schools.com/tags/ref_httpmethods.asp
 https://www.kayak.com/tracker/WN-203/2019-07-07
-view-source:https://www.kayak.com/tracker/WN-203/2019-07-07
 https://docs.python-guide.org/scenarios/scrape/
-https://stackoverflow.com/questions/1831410/python-time-comparison
-
-https://realpython.com/python-send-email/#option-2-setting-up-a-local-smtp-server
+https://realpython.com/python-send-email/
+and some stackoverflow posts

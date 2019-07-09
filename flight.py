@@ -44,6 +44,8 @@ class FlightTracker:
                 estimated_time = data[i+1]
         return [scheduled_time, estimated_time]
 
+    # Converts the time in "10:45" form to a 24 hour datetime object for
+    # all times in the given list
     def text_times_to_24_datetimes(self, text_times: list) -> list:
         converted_times = []
         for time in text_times:
@@ -53,18 +55,22 @@ class FlightTracker:
             # change time from string to ints for hour and minutes
             int_time = time_list[0].split(":")
             int_time = [int(t) for t in int_time]
-            if time_list[1] == "pm":
+            if ((time_list[1] == "pm" and time_list[0] != 12) 
+              or (time_list[1] == "am" and time_list[0] == 12)):
                 int_time[0] += 12
-            d = datetime.datetime.today() #dummy values...needs to be changed to handle flights spanning two days
+            d = datetime.datetime.today()
             dt = datetime.datetime(d.year, d.month, d.day, int_time[0], int_time[1])
             converted_times.append(dt)
         return converted_times
 
-    def is_delayed_today(self) -> bool:
+    def is_delayed_today(self) -> int:
         d = datetime.datetime.today()
         data = self.get_data_list(d)
+        assert len(data) > 0, "This flight was not found on the given website"
         text_times = self.get_text_times(data)
         times = self.text_times_to_24_datetimes(text_times)
         scheduled_time = times[0]
         estimated_time = times[1]
-        return scheduled_time.time() < estimated_time.time()
+        diff_time = estimated_time - scheduled_time
+        diff_minutes = diff_time.seconds / 60
+        return diff_minutes

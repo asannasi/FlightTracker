@@ -1,6 +1,7 @@
 import smtpd
 import asyncore
 
+#starts a local debug server
 server = smtpd.SMTPServer(('localhost', 1025), None)
 asyncore.loop()
 
